@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1074458364186",
+    "project_id": "dexpense-703fc",
+    "storage_bucket": "dexpense-703fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1074458364186:android:0436c30a374975e710c4a3",
+        "android_client_info": {
+          "package_name": "com.ceim.dexpense"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCX5wo0kqYsRQHc8HwAVXtxbTZ_98il_6U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
