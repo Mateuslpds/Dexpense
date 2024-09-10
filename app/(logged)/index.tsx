@@ -1,16 +1,15 @@
 import { db, auth } from '../../firebaseConfig';
-import { useNavigation } from 'expo-router';
-//import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, FlatList } from 'react-native';
+import { View, Text, Button, FlatList, TouchableOpacity } from 'react-native';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 
 export default function HomeScreen() {
   const [expenses, setExpenses] = useState([]);
-  const navigation = useNavigation();
+  const router = useRouter();
 
   const handleLogout = () => {
-    auth.signOut().then(() => navigation.navigate('login' as never));
+    auth.signOut().then(() => router.push('/login'));
   };
 
   useEffect(() => {
@@ -27,7 +26,6 @@ export default function HomeScreen() {
         setExpenses(expensesList);
       });
 
-      // Cleanup listener on unmount
       return () => unsubscribe();
     }
   }, []);
@@ -36,6 +34,17 @@ export default function HomeScreen() {
     <View style={{ padding: 10, borderBottomWidth: 1 }}>
       <Text>Descrição: {item.description}</Text>
       <Text>Valor: {item.value}</Text>
+      <TouchableOpacity 
+        onPress={() => router.push({
+          pathname: '/editExpense', 
+          params: {
+            id: item.id,
+            description: item.description,
+            value: item.value.toString() // Certifique-se de que o valor é uma string
+          }
+        })}>
+        <Text>Editar</Text>
+      </TouchableOpacity>
     </View>
   );
 
