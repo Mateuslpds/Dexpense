@@ -2,7 +2,7 @@ import { db, auth } from '../../firebaseConfig';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, FlatList, TouchableOpacity } from 'react-native';
-import { collection, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
 
 export default function HomeScreen() {
   const [expenses, setExpenses] = useState([]);
@@ -30,6 +30,14 @@ export default function HomeScreen() {
     }
   }, []);
 
+  const handleDeleteExpense = async (id) => {
+    try {
+      await deleteDoc(doc(db, 'expenses', id));
+    } catch (error) {
+      console.error('Error deleting expense: ', error);
+    }
+  };
+
   const renderExpenseItem = ({ item }) => (
     <View style={{ padding: 10, borderBottomWidth: 1 }}>
       <Text>Descrição: {item.description}</Text>
@@ -40,11 +48,14 @@ export default function HomeScreen() {
           params: {
             id: item.id,
             description: item.description,
-            value: item.value.toString() // Certifique-se de que o valor é uma string
+            value: item.value.toString()
           }
         })}>
         <Text>Editar</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => handleDeleteExpense(item.id)}>
+          <Text style={{ color: 'red' }}>Excluir</Text>
+        </TouchableOpacity>
     </View>
   );
 
