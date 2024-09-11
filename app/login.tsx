@@ -3,6 +3,7 @@ import { useNavigation } from 'expo-router';
 //import { useNavigation } from '@react-navigation/native';
 import { Text, View, TextInput, Alert, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
+//bgl do firebase
 import { auth } from '../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 

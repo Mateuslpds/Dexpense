@@ -16,7 +16,7 @@ export default function HomeScreen() {
         style={styles.image}
       />
       <Text style={styles.title}>Dexpense</Text>
-      <Text style={styles.subtitle}>Um texto super irado sobre o que é e para que serve.</Text>
+      <Text style={styles.subtitle}>Tuas despesas boy, Dexpense...</Text>
       <TouchableOpacity
         style={styles.btngreen} 
         onPress={() => navigation.navigate('register' as never)}>

@@ -92,7 +92,11 @@ return (
       renderItem={renderExpenseItem}
       keyExtractor={(item) => item.id}
       style={{ width: '90%' }}
+      
     />
+    <TouchableOpacity style={styles.btnred} onPress={() => handleLogout()}>
+       <Text style={styles.sairtext}>Sair</Text>
+    </TouchableOpacity>
   </View>
 );
 };
@@ -129,6 +133,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#333',
     width: 150,
+    alignItems: 'center'
   },
   buttonText: {
     color: 'white',
@@ -144,5 +149,13 @@ const styles = StyleSheet.create({
   sla: {  
     fontSize: 20,  
     color: '#333',
-    fontWeight: 'bold',}
+    fontWeight: 'bold',
+  },
+  sairtext: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    
+  }
 });

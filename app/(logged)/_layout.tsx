@@ -27,6 +27,12 @@ export default function TabLayout() {
           ),
         }}
       />
+       <Tabs.Screen
+        name="editExpense"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }
