@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigation } from 'expo-router';
 //import { useNavigation } from '@react-navigation/native';
-import { View, TextInput, Button, Text } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
 
 import { db, auth } from '../../firebaseConfig';
 import { collection,addDoc } from 'firebase/firestore';
@@ -31,26 +31,101 @@ export default function AddExpenseScreen() {
   }
 
   return(
-    <View style={{
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-    }}>
-      <Text>Adicionar despesa</Text>
+    <View style={styles.container}>
+      <Image
+        source={require('../../assets/images/logo_dexpense.png')}
+        style={styles.image}
+      />
+      <Text style={styles.title}>Dexpense</Text>
+      <Text style={styles.subtitle}>Adicionar Despesa!</Text>
+
       <TextInput
-        placeholder="Descrição"
+        style={styles.input}
+        placeholder="Adicionar descrição"
         value={description}
         onChangeText={setDescription}
       />
+
       <TextInput
-        placeholder="Valor"
+        style={styles.input}
+        placeholder="Valor da despesa"
         value={value}
         onChangeText={setValue}
       />
-      <Button
-        title="Adicionar"
-        onPress={handleAddExpense}
-      />
+
+      <TouchableOpacity
+        style={styles.btnyellow}
+        onPress={handleAddExpense}>
+        <Text style={styles.buttonText}>Adicionar</Text>
+      </TouchableOpacity>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: 200,
+    height: 200,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 14,
+    marginTop: 8,
+  },
+  subtitle: {
+    fontSize: 20,
+    color: '#333',
+    marginBottom: 10,
+    paddingHorizontal: 20,
+  },
+  btnred: {
+    backgroundColor: '#F18585',
+    paddingVertical: 10,
+    margin: 10,
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: '#333',
+    width: 150,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  slaContainer: {
+    alignSelf: 'flex-start',
+    width: '100%',
+    paddingHorizontal: 20,
+  },
+  sla: {
+    fontSize: 20,
+    color: '#333',
+  },
+  btnyellow: {
+    backgroundColor: '#F9D762',
+    paddingVertical: 12,  
+    paddingHorizontal: 24,
+    marginBottom: 90, //mega improviso
+    borderRadius:  50,
+    borderWidth: 1,
+    borderColor: '#333',
+    width: 250,
+  },
+  input: {
+    width: 250,
+    height: 50,
+    borderColor: 'black',
+    borderRadius:50,
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 20
+  },
+});
