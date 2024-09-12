@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigation } from 'expo-router';
-//import { useNavigation } from '@react-navigation/native';
-import { Text, View, TextInput, Alert, Image, StyleSheet, TouchableOpacity} from 'react-native';
-
-//bgl do firebase
+import { Text, View, TextInput, Alert, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { auth } from '../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Novo estado para controlar visibilidade da senha
 
   const navigation = useNavigation();
 
@@ -36,7 +34,7 @@ export default function LoginScreen() {
       <Image
         source={require('../assets/images/logo_dexpense.png')}
         style={styles.image}
-      /> 
+      />
       <Text style={styles.title}>Dexpense</Text>
       <Text style={styles.subtitle}>Tela de Login</Text>
       <TextInput
@@ -44,18 +42,23 @@ export default function LoginScreen() {
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
-        placeholderTextColor="#808080" // Cor do texto do placeholder
+        placeholderTextColor="#808080"
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-        placeholderTextColor="#808080" // Cor do texto do placeholder
-      />
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.inputPassword}
+          placeholder="Senha"
+          secureTextEntry={!showPassword} // Alterna entre ocultar/mostrar
+          value={password}
+          onChangeText={setPassword}
+          placeholderTextColor="#808080"
+        />
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.showButton}>
+          <Text style={styles.showText}>{showPassword ? 'Ocultar' : 'Mostrar'}</Text>
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity
-        style={styles.btngreen} 
+        style={styles.btngreen}
         onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
@@ -69,54 +72,77 @@ export default function LoginScreen() {
   );
 }
 
-const styles = StyleSheet.create({ 
-  container: { //oxe
+const styles = StyleSheet.create({
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  image: { //imagem do logo
+  image: {
     width: 200,
     height: 200,
   },
-  title: { //titulo do app
-    fontSize: 32, 
-    fontWeight: 'bold',  
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
     color: '#333',
     marginBottom: 10,
     marginTop: 8,
   },
-  subtitle: { //subtitulo do app
+  subtitle: {
     fontSize: 18,
     color: '#333',
     paddingHorizontal: 20,
     marginBottom: 5,
   },
-  btngreen: { 
+  btngreen: {
     backgroundColor: '#9FD078',
-    paddingVertical: 12,  
-    paddingHorizontal: 24, 
+    paddingVertical: 12,
+    paddingHorizontal: 24,
     marginTop: 5,
     marginBottom: 10,
-    borderRadius:50,
+    borderRadius: 50,
     borderWidth: 1,
     borderColor: '#333',
     width: 250,
   },
-  buttonText: { 
+  buttonText: {
     color: 'black',
-    fontSize: 18,  
-    fontWeight: 'bold',  
-    textAlign: 'center',  
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
-  input: { 
-    width: 250, 
-    height: 50, 
-    borderColor: 'black', 
-    borderRadius:50,
-    borderWidth: 1, 
-    marginBottom: 10, 
-    paddingHorizontal: 20 
+  input: {
+    width: 250,
+    height: 50,
+    borderColor: 'black',
+    borderRadius: 50,
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 20,
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 250,
+    height: 50,
+    borderColor: 'black',
+    borderRadius: 50,
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 20,
+  },
+  inputPassword: {
+    flex: 1,
+    height: '100%',
+  },
+  showButton: {
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+  },
+  showText: {
+    color: '#9FD078',
+    fontWeight: 'bold',
   },
   link: {
     fontSize: 18,
