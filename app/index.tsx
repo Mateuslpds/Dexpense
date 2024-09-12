@@ -32,33 +32,32 @@ export default function HomeScreen() {
   );
 };
 
-
 //Styles vão ficar aqui até eu resolver a bronca.
 const styles = StyleSheet.create({ 
-  container: { //oxe
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  image: { //imagem do logo
+  image: { 
     width: 200,
     height: 200,
   },
-  title: { //titulo do app
+  title: { 
     fontSize: 32, 
     fontWeight: 'bold',  
     color: '#333',
     marginBottom: 10,
     marginTop: 8,
   },
-  ou: { //speciaaaal
+  ou: { 
     fontSize: 20,
     color: '#333',
     marginTop: 5,
     marginBottom: 5,
     paddingHorizontal: 20,
   },
-  subtitle: { //subtitulo do app
+  subtitle: { 
     fontSize: 20,
     color: '#333',
     marginBottom: 30,
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9D762',
     paddingVertical: 12,  
     paddingHorizontal: 24,
-    marginBottom: 90, //mega improviso
+    marginBottom: 90, //Improsivado
     borderRadius:  50,
     borderWidth: 1,
     borderColor: '#333',

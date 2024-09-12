@@ -6,6 +6,7 @@ import { collection, query, where, onSnapshot, doc, deleteDoc } from 'firebase/f
 
 export default function HomeScreen() {
   const [expenses, setExpenses] = useState([]);
+  const [userName, setUserName] = useState(''); //aaaaaa
   const router = useRouter();
 
   const handleLogout = () => {
@@ -16,6 +17,7 @@ export default function HomeScreen() {
     const user = auth.currentUser;
     if (user) {
       const userId = user.uid;
+      setUserName(user.displayName || 'Usuário');
       const q = query(collection(db, 'expenses'), where('userId', '==', userId));
       
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -44,7 +46,7 @@ export default function HomeScreen() {
       borderBottomWidth: 1, 
       backgroundColor: '#EDF1EC' 
     }}> 
-      <Text>Descrição:{item.description}</Text>
+      <Text>Descrição: {item.description}</Text>
       <Text>Valor: {item.value}</Text>
       
       <View style={{ 
@@ -81,7 +83,7 @@ return (
       style={styles.image}
     />
     <Text style={styles.title}>Dexpense</Text>
-    <Text style={styles.subtitle}>Bem-vindo!</Text>
+    <Text style={styles.subtitle}>Bem-vindo(a) {userName}!</Text>
 
     <View style={styles.slaContainer}>
       <Text style={styles.sla}>Minha despesa:</Text>
