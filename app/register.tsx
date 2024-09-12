@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigation } from 'expo-router';
-//import { useNavigation } from '@react-navigation/native';
 import { Alert, View, TextInput, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-
 import { auth, db } from "../firebaseConfig";
 import { doc, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { Ionicons } from '@expo/vector-icons'; // Para o ícone de olho
 
 export default function RegisterScreen() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Estado para alternar exibição da senha
 
   const navigation = useNavigation();
 
@@ -37,7 +37,7 @@ export default function RegisterScreen() {
       navigation.navigate('login' as never);
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
-        Alert.alert('Opa!', 'Este email já está em uso. Por favor, use outro email.'); 
+        Alert.alert('Opa!', 'Este email já está em uso. Por favor, use outro email.');
       } else {
         console.error('Erro ao registrar:', error.message);
         Alert.alert('Opa!', 'Não foi possível registrar o usuário.');
@@ -70,15 +70,20 @@ export default function RegisterScreen() {
         value={email}
         onChangeText={setEmail}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        value={password}
-        secureTextEntry
-        onChangeText={setPassword}
-      />
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="Senha"
+          value={password}
+          secureTextEntry={!showPassword} // Alterna a visibilidade da senha
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color="black" />
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity
-        style={styles.btngreen} 
+        style={styles.btngreen}
         onPress={handleRegister}>
         <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
@@ -92,58 +97,67 @@ export default function RegisterScreen() {
   );
 }
 
-const styles = StyleSheet.create({ 
-  container: { //oxe
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  image: { //imagem do logo
+const styles = StyleSheet.create({
+  image: {
     width: 200,
     height: 200,
   },
-  title: { //titulo do app
-    fontSize: 32, 
-    fontWeight: 'bold',  
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
     color: '#333',
     marginBottom: 10,
     marginTop: 8,
   },
-  subtitle: { //subtitulo do app
+  subtitle: {
     fontSize: 18,
     color: '#333',
     paddingHorizontal: 20,
     marginBottom: 5,
   },
-  btngreen: { 
+  btngreen: {
     backgroundColor: '#9FD078',
-    paddingVertical: 12,  
-    paddingHorizontal: 24, 
+    paddingVertical: 12,
+    paddingHorizontal: 24,
     marginTop: 5,
     marginBottom: 10,
-    borderRadius:50,
+    borderRadius: 50,
     borderWidth: 1,
     borderColor: '#333',
     width: 250,
   },
-  buttonText: { 
+  buttonText: {
     color: 'black',
-    fontSize: 18,  
-    fontWeight: 'bold',  
-    textAlign: 'center',  
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
-  input: { 
-    width: 250, 
-    height: 50, 
-    borderColor: 'black', 
-    borderRadius:50,
-    borderWidth: 1, 
-    marginBottom: 10, 
-    paddingHorizontal: 20 
-  }, 
+  input: {
+    width: 250,
+    height: 50,
+    borderColor: 'black',
+    borderRadius: 50,
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 20,
+  },
   link: {
     fontSize: 18,
     color: '#9FD078',
     textDecorationLine: 'underline',
+  },
+  passwordContainer: { // Contêiner para a senha e o ícone
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 50,
+    width: 250,
+    height: 50,
+    paddingHorizontal: 20,
+    marginBottom: 10,
+  },
+  passwordInput: { // Input para a senha
+    flex: 1,
   },
 });

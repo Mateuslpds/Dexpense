@@ -3,6 +3,7 @@ import { useNavigation } from 'expo-router';
 import { Text, View, TextInput, Alert, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { auth } from '../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -48,13 +49,13 @@ export default function LoginScreen() {
         <TextInput
           style={styles.inputPassword}
           placeholder="Senha"
-          secureTextEntry={!showPassword} // Alterna entre ocultar/mostrar
           value={password}
+          secureTextEntry={!showPassword} // Alterna entre ocultar/mostrar
           onChangeText={setPassword}
           placeholderTextColor="#808080"
         />
-        <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.showButton}>
-          <Text style={styles.showText}>{showPassword ? 'Ocultar' : 'Mostrar'}</Text>
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color="black" />
         </TouchableOpacity>
       </View>
       <TouchableOpacity
@@ -149,4 +150,5 @@ const styles = StyleSheet.create({
     color: '#9FD078',
     textDecorationLine: 'underline',
   },
+ 
 });
