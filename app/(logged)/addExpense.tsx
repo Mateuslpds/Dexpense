@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useNavigation } from 'expo-router';
 //import { useNavigation } from '@react-navigation/native';
 import { View, TextInput, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
-import DateTimePicker from 'react-native-ui-datepicker';
-import dayjs from 'dayjs';
+//import DateTimePicker from 'react-native-ui-datepicker';
+//import dayjs from 'dayjs';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 
 import { db, auth } from '../../firebaseConfig';
 import { collection,addDoc } from 'firebase/firestore';
@@ -11,7 +13,12 @@ import { collection,addDoc } from 'firebase/firestore';
 export default function AddExpenseScreen() {
   const navigation = useNavigation();
 
-  const [date, setDate] = useState(dayjs());
+   //const [date, setDate] = useState(new Date());
+
+   const [date, setDate] = useState(new Date());
+   const [mode, setMode] = useState('date');
+   const [show, setShow] = useState(false);
+  //const [locale, setLocale] = useState('br');
   const [description, setDescription] = useState('');
   const [value, setValue] = useState('');
 
@@ -20,8 +27,8 @@ export default function AddExpenseScreen() {
       const user = auth.currentUser;
       const userId = user.uid;
 
-      await addDoc(collection(db, 'expenses2'), {
-        date,
+      await addDoc(collection(db, 'expenses'), {
+        date: date.toISOString(),
         description,
         value: parseFloat(value),
         userId
@@ -33,6 +40,25 @@ export default function AddExpenseScreen() {
       console.error('Erro ao adicionar despesa:', error.message);
     }
   }
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
 
   return(
     <View style={styles.container}>
@@ -49,13 +75,6 @@ export default function AddExpenseScreen() {
         value={description}
         onChangeText={setDescription}
       />
-      
-      <DateTimePicker
-        //STYLE
-        mode="single"
-        value={date}
-        onChange={(params) => setDate(params.date)}
-      />
 
       <TextInput
         style={styles.input}
@@ -64,6 +83,19 @@ export default function AddExpenseScreen() {
         onChangeText={setValue}
       />
 
+<Text style={styles.subtitle}> selecione a data de pagamento</Text>
+        
+        
+      <DateTimePicker
+        testID="dateTimePicker"
+        value={date}
+        mode={mode}
+        is24Hour={true}
+        onChange={onChange}
+      />
+
+
+      
       <TouchableOpacity
         style={styles.btnyellow}
         onPress={handleAddExpense}>
