@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigation } from 'expo-router';
 //import { useNavigation } from '@react-navigation/native';
 import { View, TextInput, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
+import DateTimePicker from 'react-native-ui-datepicker';
+import dayjs from 'dayjs';
 
 import { db, auth } from '../../firebaseConfig';
 import { collection,addDoc } from 'firebase/firestore';
@@ -9,6 +11,7 @@ import { collection,addDoc } from 'firebase/firestore';
 export default function AddExpenseScreen() {
   const navigation = useNavigation();
 
+  const [date, setDate] = useState(dayjs());
   const [description, setDescription] = useState('');
   const [value, setValue] = useState('');
 
@@ -17,7 +20,8 @@ export default function AddExpenseScreen() {
       const user = auth.currentUser;
       const userId = user.uid;
 
-      await addDoc(collection(db, 'expenses'), {
+      await addDoc(collection(db, 'expenses2'), {
+        date,
         description,
         value: parseFloat(value),
         userId
@@ -44,6 +48,13 @@ export default function AddExpenseScreen() {
         placeholder="Adicionar descrição"
         value={description}
         onChangeText={setDescription}
+      />
+      
+      <DateTimePicker
+        //STYLE
+        mode="single"
+        value={date}
+        onChange={(params) => setDate(params.date)}
       />
 
       <TextInput
