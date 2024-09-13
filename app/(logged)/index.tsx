@@ -31,7 +31,7 @@ export default function HomeScreen() {
       return () => unsubscribe();
     }
   }, []);
-
+//aqui jas a data na home :(
   const handleDeleteExpense = async (id) => {
     try {
       await deleteDoc(doc(db, 'expenses', id));
@@ -48,7 +48,7 @@ export default function HomeScreen() {
     }}> 
       <Text>Descrição: {item.description}</Text>
       <Text>Valor: {item.value}</Text>
-      <Text>Data: {item.date}</Text>
+      
       
       <View style={{ 
         flexDirection: 'row', 
