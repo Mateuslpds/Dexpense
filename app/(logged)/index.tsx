@@ -48,6 +48,7 @@ export default function HomeScreen() {
     }}> 
       <Text>Descrição: {item.description}</Text>
       <Text>Valor: {item.value}</Text>
+      <Text>Data: {item.date}</Text>
       
       <View style={{ 
         flexDirection: 'row', 

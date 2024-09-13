@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigation } from 'expo-router';
 //import { useNavigation } from '@react-navigation/native';
-import { View, TextInput, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, Image, StyleSheet, Button} from 'react-native';
 //import DateTimePicker from 'react-native-ui-datepicker';
 //import dayjs from 'dayjs';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -32,6 +32,7 @@ export default function AddExpenseScreen() {
         description,
         value: parseFloat(value),
         userId
+
       });
 
       console.log('Despesa adicionada com sucesso!');
@@ -41,7 +42,7 @@ export default function AddExpenseScreen() {
     }
   }
 
-  const onChange = (event, selectedDate) => {
+ const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setShow(false);
     setDate(currentDate);
@@ -85,14 +86,19 @@ export default function AddExpenseScreen() {
 
 <Text style={styles.subtitle}> selecione a data de pagamento</Text>
         
-        
-      <DateTimePicker
-        testID="dateTimePicker"
-        value={date}
-        mode={mode}
-        is24Hour={true}
-        onChange={onChange}
-      />
+<Button onPress={showDatepicker} title= "Selecione data do pagamento" />
+      
+      <Text>data: {date.toLocaleDateString()}</Text>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          onChange={onChange}
+        />
+      )}
+    
 
 
       
