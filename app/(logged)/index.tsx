@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { collection, query, where, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
+//import moment from 'moment';
 
 export default function HomeScreen() {
   const [expenses, setExpenses] = useState([]);
@@ -39,6 +40,7 @@ export default function HomeScreen() {
       console.error('Error deleting expense: ', error);
     }
   };
+  
 
   const renderExpenseItem = ({ item }) => ( 
     <View style={{ 
@@ -48,6 +50,7 @@ export default function HomeScreen() {
     }}> 
       <Text>Descrição: {item.description}</Text>
       <Text>Valor: {item.value}</Text>
+      <Text>Data: {item.date.toLocaleString()}</Text>
       
       
       <View style={{ 

@@ -7,6 +7,7 @@ import { View, TextInput, TouchableOpacity, Text, Image, StyleSheet, Button} fro
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 
+
 import { db, auth } from '../../firebaseConfig';
 import { collection,addDoc } from 'firebase/firestore';
 
@@ -28,7 +29,7 @@ export default function AddExpenseScreen() {
       const userId = user.uid;
 
       await addDoc(collection(db, 'expenses'), {
-        date: date.toISOString(),
+        date: date.toLocaleDateString(),
         description,
         value: parseFloat(value),
         userId
