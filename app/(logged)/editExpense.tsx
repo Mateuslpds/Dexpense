@@ -2,13 +2,16 @@ import { db } from '../../firebaseConfig';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
 import { doc, updateDoc } from 'firebase/firestore';
-import { View, TextInput, TouchableOpacity, Text, Image, StyleSheet  } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, Image, StyleSheet,Button  } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 export default function EditExpenseScreen() {
-  const { id, description: initialDescription, value: initialValue } = useLocalSearchParams();
+  const { id, description: initialDescription, value: initialValue, date: initialDate, mode: initialMode, show: initialShow } = useLocalSearchParams();
 
-
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState(initialMode || 'date');
+  const [show, setShow] = useState(initialShow || false);
   const [description, setDescription] = useState(initialDescription || '');
   const [value, setValue] = useState(initialValue ? initialValue.toString() : '');
   const router = useRouter();
@@ -17,13 +20,35 @@ export default function EditExpenseScreen() {
   const handleSave = async () => {
     if (!id) return;
 
+    const date = new Date();
 
     const expenseRef = doc(db, 'expenses', id);
     await updateDoc(expenseRef, {
+      date: date.toLocaleDateString(),
       description,
       value: parseFloat(value),
     });
     router.back();
+  };
+
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
   };
 
 
@@ -44,7 +69,10 @@ export default function EditExpenseScreen() {
 
       <Text style={{ marginVertical: 10,fontWeight: 'bold' }}>Quantia Atual: {initialValue}</Text>
 
+      <Text> Data para efetuar pagamento: {initialDate} </Text>
 
+
+      <Text> </Text>
       <TextInput
         style={styles.input}
         value={description}
@@ -60,6 +88,21 @@ export default function EditExpenseScreen() {
         placeholder="Valor"
       />
 
+
+    <Text style={styles.subtitle}> selecione a data de pagamento</Text>
+          
+    <Button onPress={showDatepicker} title= "Selecione data do pagamento" />
+        
+        <Text>data: {date.toLocaleDateString()}</Text>
+           {show && (
+              <DateTimePicker
+                  testID="dateTimePicker"
+                  value={date}
+                  mode={mode}
+                  is24Hour={true}
+                  onChange={onChange}
+                />
+             )}
 
       <TouchableOpacity
         style={styles.btngreen}

@@ -65,7 +65,8 @@ export default function HomeScreen() {
             params: {
               id: item.id,
               description: item.description,
-              value: item.value.toString()
+              value: item.value.toString(),
+              date: item.date.toLocaleString(),
             }
           })}
           style={{ marginRight: 10 }}
