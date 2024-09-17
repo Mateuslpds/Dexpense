@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 1,
     borderColor: '#333',
-    width: 250,
+    width: 280,
   },
   buttonText: {
     color: 'black',
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   input: {
-    width: 250,
+    width: 280,
     height: 50,
     borderColor: 'black',
     borderRadius: 50,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: 250,
+    width: 280,
     height: 50,
     borderColor: 'black',
     borderRadius: 50,
@@ -150,5 +150,4 @@ const styles = StyleSheet.create({
     color: '#9FD078',
     textDecorationLine: 'underline',
   },
- 
 });

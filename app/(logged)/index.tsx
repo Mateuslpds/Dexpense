@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { collection, query, where, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
+import { Ionicons } from '@expo/vector-icons';
 //import moment from 'moment';
 
 export default function HomeScreen() {
@@ -43,21 +44,20 @@ export default function HomeScreen() {
   
 
   const renderExpenseItem = ({ item }) => ( 
-    <View style={{ 
-      padding: 10, 
-      borderBottomWidth: 1, 
-      backgroundColor: '#EDF1EC' 
-    }}> 
-      <Text>Descrição: {item.description}</Text>
-      <Text>Valor: {item.value}</Text>
-      <Text>Data: {item.date.toLocaleString()}</Text>
-      
-      
-      <View style={{ 
-        flexDirection: 'row', 
-        justifyContent: 'flex-start', 
-        alignSelf: 'flex-end', 
-        marginTop: 10 
+    <View style={styles.caixinha}> 
+      <View>
+        <Text>
+          <Text style={{ fontWeight: 'bold' }}>Descrição: </Text>{item.description}
+        </Text>
+        <Text>
+          <Text style={{ fontWeight: 'bold' }}>Valor: </Text>R$ {item.value}
+        </Text>
+        <Text>
+          <Text style={{ fontWeight: 'bold' }}>Data: </Text>{item.date.toLocaleString()}
+        </Text>
+      </View>
+
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignSelf: 'flex-end', marginTop: 10 
       }}>
         <TouchableOpacity 
           onPress={() => router.push({
@@ -71,13 +71,14 @@ export default function HomeScreen() {
           })}
           style={{ marginRight: 10 }}
         >
-          <Text>Editar</Text>
+          <Ionicons name="create-outline" size={24} color="black" />
         </TouchableOpacity>
         
         <TouchableOpacity onPress={() => handleDeleteExpense(item.id)}>
-          <Text style={{ color: 'red', fontSize: 14,}}>Excluir</Text>
+          <Ionicons name="trash-outline" size={24} color="red" />
         </TouchableOpacity>
       </View>
+
     </View>
   );
   
@@ -99,24 +100,34 @@ return (
       renderItem={renderExpenseItem}
       keyExtractor={(item) => item.id}
       style={{ width: '90%' }}
-      
     />
     <TouchableOpacity style={styles.btnred} onPress={() => handleLogout()}>
-       <Text style={styles.sairtext}>Sair</Text>
+      <View style={styles.buttonContent}>
+        <Text style={styles.sairtext}>Sair</Text>
+        <Ionicons name="log-out-outline" size={24} color="white" style={{ marginLeft: 5 }}/>
+      </View>
     </TouchableOpacity>
   </View>
 );
 };
 
 const styles = StyleSheet.create({
+  caixinha: {
+    padding: 10,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: '#9FD078',
+    borderRadius: 10,
+    backgroundColor: '#deedd1'
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   image: {
-    width: 200,
-    height: 200,
+    width: 180,
+    height: 180,
     marginTop: 20,
   },
   title: {
@@ -129,7 +140,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 20,
     color: '#333',
-    marginBottom: 30,
+    marginBottom: 15,
     paddingHorizontal: 20,
   },
   btnred: {
@@ -163,6 +174,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-    
-  }
+  },
+  buttonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });

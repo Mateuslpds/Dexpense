@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 1,
     borderColor: '#333',
-    width: 250,
+    width: 280,
   },
   buttonText: {
     color: 'black',
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   input: {
-    width: 250,
+    width: 280,
     height: 50,
     borderColor: 'black',
     borderRadius: 50,
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 50,
-    width: 250,
+    width: 280,
     height: 50,
     paddingHorizontal: 20,
     marginBottom: 10,
