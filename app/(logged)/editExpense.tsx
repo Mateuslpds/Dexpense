@@ -20,7 +20,7 @@ export default function EditExpenseScreen() {
   const handleSave = async () => {
     if (!id) return;
 
-    const date = new Date();
+    //const date = new Date();
 
     const expenseRef = doc(db, 'expenses', id);
     await updateDoc(expenseRef, {
